@@ -9,25 +9,65 @@ function MainPage() {
   const [trending, setTrending] = useState([]);
   const [trendingMovie, setTrendingMovie] = useState([]);
   const [trendingSeries, setTrendingSeries] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   const fetchTrending = async () => {
-    const trendingRequest = await fetch(
-      `https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.REACT_APP_API_KEY}`
-    );
-    const trendingMovie = await fetch(
-      `https://api.themoviedb.org/3/trending/movie/day?api_key=${process.env.REACT_APP_API_KEY}`
-    );
-    const trendingSeries = await fetch(
-      `https://api.themoviedb.org/3/trending/tv/day?api_key=${process.env.REACT_APP_API_KEY}`
-    );
-    const movieTrendingData = await trendingMovie.json();
-    const trendingData = await trendingRequest.json();
-    const seriesTrendingData = await trendingSeries.json();
+    let errorTrending, errorMovie, errorSeries;
+    let loadingTrending, loadingMovie, loadingSeries;
+    try {
+      const trendingRequest = await fetch(
+        `https://api.themoviedb.org/3/trending/all/day?api_key=${process.env.REACT_APP_API_KEY}`
+      );
+      const trendingData = await trendingRequest.json();
+      setTrending(trendingData.results);
+      loadingTrending = false;
+    } catch (error) {
+      errorTrending = true;
+    }
+    try {
+      const trendingMovie = await fetch(
+        `https://api.themoviedb.org/3/trending/movie/day?api_key=${process.env.REACT_APP_API_KEY}`
+      );
+      const movieTrendingData = await trendingMovie.json();
+      setTrendingMovie(movieTrendingData.results);
+      loadingMovie = false;
+    } catch (error) {
+      errorMovie = true;
+    }
+    try {
+      const trendingSeries = await fetch(
+        `https://api.themoviedb.org/3/trending/tv/day?api_key=${process.env.REACT_APP_API_KEY}`
+      );
+      const seriesTrendingData = await trendingSeries.json();
+      setTrendingSeries(seriesTrendingData.results);
+      loadingSeries = false;
+    } catch (error) {
+      errorSeries = true;
+    }
 
-    setTrending(trendingData.results);
-    setTrendingMovie(movieTrendingData.results);
-    setTrendingSeries(seriesTrendingData.results);
+    if (errorTrending || errorMovie || errorSeries) {
+      setError(true);
+    }
+
+    if (!loadingTrending && !loadingMovie && !loadingSeries) {
+      setLoading(false);
+    }
   };
+
+  const style = {
+    color: 'white',
+    fontSize: 52,
+    textAlign: 'center',
+  };
+
+  if (loading) {
+    return <div style={style}>Loading...</div>;
+  }
+
+  if (error) {
+    return <div style={style}>Error..</div>;
+  }
 
   return (
     <div className='main-page'>
