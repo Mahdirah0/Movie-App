@@ -17,13 +17,13 @@ function Header() {
           <Link to='/' style={style}>
             <li>Home</li>
           </Link>
-          <Link to='/trending' style={style}>
+          <Link to='trending' style={style}>
             <li>Trending</li>
           </Link>
-          <Link to='/series-nav' style={style}>
+          <Link to='tv' style={style}>
             <li>Series</li>
           </Link>
-          <Link to='/movie-nav' style={style}>
+          <Link to='movie' style={style}>
             <li>Movies</li>
           </Link>
         </ul>

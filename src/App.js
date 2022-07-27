@@ -1,16 +1,14 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import MainPage from './components/MainPage';
 import Header from './components/Header';
 import Search from './components/Search';
-import SeriesNav from './components/SeriesNav';
-import MoviesNav from './components/MoviesNav';
-import MovieDetails from './components/MovieDetails';
-import SeriesDetails from './components/SeriesDetail';
 import SearchPage from './components/SearchPage';
-import Trending from './components/Trending';
+import Trending from './components/Trending/Trending';
+import Media from './components/Media/Media';
+import MediaDetailsPage from './components/Media/MediaDetailsPage';
 
 function App() {
   return (
@@ -18,15 +16,13 @@ function App() {
       <div className='App'>
         <Header />
         <Search />
-        <Switch>
-          <Route path='/' exact component={MainPage} />
-          <Route path='/series-nav' exact component={SeriesNav} />
-          <Route path='/movie-nav' exact component={MoviesNav} />
-          <Route path='/trending' exact component={Trending} />
-          <Route path='/series-nav/:id' exact component={SeriesDetails} />
-          <Route path='/movie-nav/:id' exact component={MovieDetails} />
-          <Route path='/search/:searchStrings' exact component={SearchPage} />
-        </Switch>
+        <Routes>
+          <Route path='/' element={<MainPage />} />
+          <Route path=':media' element={<Media />} />
+          <Route path='trending' element={<Trending />} />
+          <Route path='media/:type/:id' element={<MediaDetailsPage />} />
+          <Route path='search/:searchStrings' element={<SearchPage />} />
+        </Routes>
       </div>
     </Router>
   );

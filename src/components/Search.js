@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { useHistory, withRouter } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-function Search(props) {
+function Search() {
   const [search, setSearch] = useState('');
-
-  let history = useHistory();
+  const navigate = useNavigate();
 
   const changeSearch = (e) => {
     setSearch(e.target.value);
@@ -12,7 +11,7 @@ function Search(props) {
 
   const getSearch = (e) => {
     e.preventDefault();
-    history.push(`/search/${search}`);
+    navigate(`/search/${search}`);
     setSearch(search);
   };
 
@@ -31,4 +30,4 @@ function Search(props) {
   );
 }
 
-export default withRouter(Search);
+export default Search;

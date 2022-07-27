@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import ShowDetails from './ShowDetails';
+import ShowDetails from './DisplayImages';
+import { useParams } from 'react-router-dom';
+import searchMedia from '../services/search';
 
-const SearchPage = ({ match }) => {
+const SearchPage = () => {
   const [data, setData] = useState([]);
+  let params = useParams();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const params = match.params.searchStrings;
-
-      if (params !== '') {
-        const requestUrl = `https://api.themoviedb.org/3/search/multi?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&query=${params}&page=1&include_adult=false`;
-        const request = await fetch(requestUrl);
-        const requestData = await request.json();
-        setData(requestData.results);
-      }
-    };
     fetchData();
-  }, [match]);
+  }, [params]);
+
+  const fetchData = async () => {
+    if (params.searchStrings !== '') {
+      const requestData = await searchMedia(params.searchStrings);
+      setData(requestData.results);
+    }
+  };
 
   return (
     <div className='search-container'>
