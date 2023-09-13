@@ -17,9 +17,6 @@ function Header() {
           <Link to='/' style={style}>
             <li>Home</li>
           </Link>
-          <Link to='trending' style={style}>
-            <li>Trending</li>
-          </Link>
           <Link to='tv' style={style}>
             <li>Series</li>
           </Link>

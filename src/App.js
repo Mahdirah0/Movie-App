@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import MainPage from './components/MainPage';
 import Header from './components/Header';
 import Search from './components/Search';
 import SearchPage from './components/SearchPage';
@@ -17,9 +16,8 @@ function App() {
         <Header />
         <Search />
         <Routes>
-          <Route path='/' element={<MainPage />} />
+          <Route path='/' element={<Trending />} />
           <Route path=':media' element={<Media />} />
-          <Route path='trending' element={<Trending />} />
           <Route path='media/:type/:id' element={<MediaDetailsPage />} />
           <Route path='search/:searchStrings' element={<SearchPage />} />
         </Routes>
